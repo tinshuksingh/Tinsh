@@ -1,3 +1,6 @@
+ storagePolicySelectorJobSqsQueue
+ sampleDataSqsQeue
+
 Feb-16-2018 10:38:30.678 [http-nio-8080-exec-10] TRACE org.springframework.cache.interceptor.CacheInterceptor.generateKey   - Computed cache key '[org.finra.herd.dao.impl.SecurityFunctionDaoImpl, getSecurityFunctions]' for operation Builder[public java.util.List org.finra.herd.dao.impl.SecurityFunctionDaoImpl.getSecurityFunctions()] caches=[herd_cache] | key='' | keyGenerator='' | cacheManager='' | cacheResolver='' | condition='' | unless='' | sync='false'
 Feb-16-2018 10:38:30.678 [http-nio-8080-exec-10] TRACE org.springframework.cache.interceptor.CacheInterceptor.generateKey   - Computed cache key '[org.finra.herd.dao.impl.SecurityFunctionDaoImpl, getSecurityFunctions]' for operation Builder[public java.util.List org.finra.herd.dao.impl.SecurityFunctionDaoImpl.getSecurityFunctions()] caches=[herd_cache] | key='' | keyGenerator='' | cacheManager='' | cacheResolver='' | condition='' | unless='' | sync='false'
 Feb-16-2018 10:38:30.679 [http-nio-8080-exec-10] TRACE org.springframework.cache.interceptor.CacheInterceptor.findInCaches   - Cache entry for key '[org.finra.herd.dao.impl.SecurityFunctionDaoImpl, getSecurityFunctions]' found in cache 'herd_cache'
