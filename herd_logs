@@ -17,3 +17,80 @@ Feb-28-2018 10:53:52.095 [http-nio-8080-exec-5] DEBUG org.finra.herd.ui.RequestL
 Hibernate: select configurat0_.cnfgn_key_nm as cnfgn_ke1_20_, configurat0_.cnfgn_value_ds as cnfgn_va2_20_, configurat0_.cnfgn_value_cl as cnfgn_va3_20_ from cnfgn configurat0_ where configurat0_.cnfgn_key_nm=?
 =Hibernate: select searchinde0_.srch_idx_type_cd as srch_idx1_48_, searchinde0_.CREAT_USER_ID as CREAT_US2_48_, searchinde0_.CREAT_TS as CREAT_TS3_48_, searchinde0_.UPDT_USER_ID as UPDT_USE4_48_, searchinde0_.UPDT_TS as UPDT_TS5_48_ from srch_idx_type_cd_lk searchinde0_ where upper(searchinde0_.srch_idx_type_cd)=?
 Hibernate: select searchinde0_.srch_idx_nm as srch_idx1_46_, searchinde0_.CREAT_USER_ID as CREAT_US2_46_, searchinde0_.CREAT_TS as CREAT_TS3_46_, searchinde0_.UPDT_USER_ID as UPDT_USE4_46_, searchinde0_.UPDT_TS as UPDT_TS5_46_, searchinde0_.actv_fl as actv_fl6_46_, searchinde0_.srch_idx_stts_cd as srch_idx7_46_, searchinde0_.srch_idx_type_cd as srch_idx8_46_ from srch_idx searchinde0_ where searchinde0_.srch_idx_type_cd=?
+
+
+
+postgres=# \d+ srch_idx
+                                                               Table "public.srch_idx"
+      Column      |            Type             |                          Modifiers                          | Storage  | Stats target | Description
+
+------------------+-----------------------------+-------------------------------------------------------------+----------+--------------+------------
+-
+ srch_idx_nm      | character varying(255)      | not null                                                    | extended |              |
+ srch_idx_type_cd | character varying(255)      | not null                                                    | extended |              |
+ srch_idx_stts_cd | character varying(255)      | not null                                                    | extended |              |
+ creat_ts         | timestamp without time zone | not null default ('now'::text)::timestamp without time zone | plain    |              |
+ creat_user_id    | character varying(100)      | not null                                                    | extended |              |
+ updt_ts          | timestamp without time zone | not null default ('now'::text)::timestamp without time zone | plain    |              |
+ updt_user_id     | character varying(100)      |                                                             | extended |              |
+ actv_fl          | character(1)                |                                                             | extended |              |
+Indexes:
+    "srch_idx_pk" PRIMARY KEY, btree (srch_idx_nm)
+Foreign-key constraints:
+    "srch_idx_fk1" FOREIGN KEY (srch_idx_type_cd) REFERENCES srch_idx_type_cd_lk(srch_idx_type_cd)
+    "srch_idx_fk2" FOREIGN KEY (srch_idx_stts_cd) REFERENCES srch_idx_stts_cd_lk(srch_idx_stts_cd)
+
+postgres=# select * from srch_idx;
+ srch_idx_nm | srch_idx_type_cd | srch_idx_stts_cd | creat_ts | creat_user_id | updt_ts | updt_user_id | actv_fl
+-------------+------------------+------------------+----------+---------------+---------+--------------+---------
+(0 rows)
+
+
+postgres=# \d+ srch_idx_stts_cd_lk
+                                                          Table "public.srch_idx_stts_cd_lk"
+      Column      |            Type             |                          Modifiers                          | Storage  | Stats target | Description
+
+------------------+-----------------------------+-------------------------------------------------------------+----------+--------------+------------
+-
+ srch_idx_stts_cd | character varying(255)      | not null                                                    | extended |              |
+ creat_ts         | timestamp without time zone | not null default ('now'::text)::timestamp without time zone | plain    |              |
+ creat_user_id    | character varying(100)      | not null                                                    | extended |              |
+ updt_ts          | timestamp without time zone | not null default ('now'::text)::timestamp without time zone | plain    |              |
+ updt_user_id     | character varying(100)      |                                                             | extended |              |
+Indexes:
+    "srch_idx_stts_cd_lk_pk" PRIMARY KEY, btree (srch_idx_stts_cd)
+Referenced by:
+    TABLE "srch_idx" CONSTRAINT "srch_idx_fk2" FOREIGN KEY (srch_idx_stts_cd) REFERENCES srch_idx_stts_cd_lk(srch_idx_stts_cd)
+
+postgres=# select * from srch_idx_stts_cd_lk;
+ srch_idx_stts_cd |          creat_ts          | creat_user_id |          updt_ts           | updt_user_id
+------------------+----------------------------+---------------+----------------------------+--------------
+ BUILDING         | 2018-02-01 13:26:33.219714 | SYSTEM        | 2018-02-01 13:26:33.219714 | SYSTEM
+ READY            | 2018-02-01 13:26:33.220579 | SYSTEM        | 2018-02-01 13:26:33.220579 | SYSTEM
+(2 rows)
+
+
+
+
+postgres=# \d+ srch_idx_type_cd_lk
+                                                          Table "public.srch_idx_type_cd_lk"
+      Column      |            Type             |                          Modifiers                          | Storage  | Stats target | Description
+
+------------------+-----------------------------+-------------------------------------------------------------+----------+--------------+------------
+-
+ srch_idx_type_cd | character varying(255)      | not null                                                    | extended |              |
+ creat_ts         | timestamp without time zone | not null default ('now'::text)::timestamp without time zone | plain    |              |
+ creat_user_id    | character varying(100)      | not null                                                    | extended |              |
+ updt_ts          | timestamp without time zone | not null default ('now'::text)::timestamp without time zone | plain    |              |
+ updt_user_id     | character varying(100)      |                                                             | extended |              |
+Indexes:
+    "srch_idx_type_cd_lk_pk" PRIMARY KEY, btree (srch_idx_type_cd)
+Referenced by:
+    TABLE "srch_idx" CONSTRAINT "srch_idx_fk1" FOREIGN KEY (srch_idx_type_cd) REFERENCES srch_idx_type_cd_lk(srch_idx_type_cd)
+
+postgres=# select * from srch_idx_type_cd_lk;
+ srch_idx_type_cd |          creat_ts          | creat_user_id |          updt_ts           | updt_user_id
+------------------+----------------------------+---------------+----------------------------+--------------
+ BUS_OBJCT_DFNTN  | 2018-02-01 13:26:33.21871  | SYSTEM        | 2018-02-01 13:26:33.21871  | SYSTEM
+ TAG              | 2018-02-01 13:28:20.101064 | SYSTEM        | 2018-02-01 13:28:20.101064 | SYSTEM
+(2 rows)
